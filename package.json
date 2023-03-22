@@ -1,0 +1,19 @@
+{
+  "name": "oceanic.js-interactions",
+  "version": "0.0.1",
+  "description": "An interaction command handler for Oceanic.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": "https://github.com/AlekEagle/oceanic.js-interactions",
+  "author": "Alek Evans & Daniel Conley",
+  "license": "MIT",
+  "dependencies": {
+    "oceanic.js": "dev"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  }
+}
