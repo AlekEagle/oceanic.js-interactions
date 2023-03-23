@@ -10,7 +10,7 @@ import type { Subcommand } from "./Subcommand";
 export class SubcommandGroup<
   O extends BaseCommandData = BaseCommandData
 > extends RunnableCommand<O> {
-  public subcommands: RunnableCommand[] = [];
+  public subcommands: Subcommand[] = [];
   constructor(
     public name: string,
     public description: string,
