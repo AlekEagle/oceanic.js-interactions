@@ -1,6 +1,6 @@
 {
   "name": "oceanic.js-interactions",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An interaction command handler for Oceanic.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
