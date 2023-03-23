@@ -58,9 +58,7 @@ export class SlashCommand<
           ? Object.entries(this.params).map(([key, value]) => {
               return {
                 name: key,
-                description: value.description,
-                type: value.type,
-                required: value.required,
+                ...value,
               };
             })
           : [

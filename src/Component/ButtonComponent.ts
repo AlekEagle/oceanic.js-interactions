@@ -10,19 +10,21 @@ import {
 } from "oceanic.js";
 
 export interface ButtonOptions {
-  label?: string;
   emoji?: PartialEmoji;
   disabled?: boolean;
 }
 
-export abstract class ButtonBase extends RunnableComponent<ComponentTypes.BUTTON> {
+export class ButtonBaseComponent extends RunnableComponent<ComponentTypes.BUTTON> {
   public override type: ComponentTypes.BUTTON = ComponentTypes.BUTTON;
-  public abstract style: Exclude<ButtonStyles, ButtonStyles.LINK>;
+  public style: Exclude<ButtonStyles, ButtonStyles.LINK> = ButtonStyles.PRIMARY;
 
   constructor(
     customID: string,
+    public label: string,
     handler?: RunnableComponentHandler,
-    public options: ButtonOptions = {}
+    public options: ButtonOptions & {
+      style?: Exclude<ButtonStyles, ButtonStyles.LINK>;
+    } = {}
   ) {
     super(customID, handler);
   }
@@ -32,23 +34,24 @@ export abstract class ButtonBase extends RunnableComponent<ComponentTypes.BUTTON
       type: this.type,
       customID: this.customID,
       style: this.style,
+      label: this.label,
       ...this.options,
     };
   }
 }
 
-export class PrimaryButtonComponent extends ButtonBase {
+export class PrimaryButtonComponent extends ButtonBaseComponent {
   public override style: ButtonStyles.PRIMARY = ButtonStyles.PRIMARY;
 }
 
-export class SecondaryButtonComponent extends ButtonBase {
+export class SecondaryButtonComponent extends ButtonBaseComponent {
   public override style: ButtonStyles.SECONDARY = ButtonStyles.SECONDARY;
 }
 
-export class SuccessButtonComponent extends ButtonBase {
+export class SuccessButtonComponent extends ButtonBaseComponent {
   public override style: ButtonStyles.SUCCESS = ButtonStyles.SUCCESS;
 }
 
-export class DangerButtonComponent extends ButtonBase {
+export class DangerButtonComponent extends ButtonBaseComponent {
   public override style: ButtonStyles.DANGER = ButtonStyles.DANGER;
 }

@@ -12,6 +12,7 @@ import {
   OptionArgType,
   OptionTypes,
   ConvertInteractionOptions,
+  OptionChoice,
 } from "./OptionBuilder";
 
 export class Subcommand<
@@ -41,9 +42,7 @@ export class Subcommand<
       options: Object.entries(this.params).map(([key, value]) => {
         return {
           name: key,
-          description: value.description,
-          type: value.type,
-          required: value.required,
+          ...value,
         };
       }),
       ...this.options,

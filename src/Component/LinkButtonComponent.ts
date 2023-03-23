@@ -1,16 +1,16 @@
 import { BaseComponent } from "./BaseComponent";
-import {
-  ComponentTypes,
-  MessageComponent,
-  ButtonStyles,
-} from "oceanic.js";
+import { ComponentTypes, MessageComponent, ButtonStyles } from "oceanic.js";
 import type { ButtonOptions } from "./ButtonComponent";
 
 export class LinkButtonComponent extends BaseComponent<ComponentTypes.BUTTON> {
   public override type: ComponentTypes.BUTTON = ComponentTypes.BUTTON;
   public style: ButtonStyles.LINK = ButtonStyles.LINK;
 
-  constructor(public url: string, public options: ButtonOptions = {}) {
+  constructor(
+    public url: string,
+    public label: string,
+    public options: ButtonOptions = {}
+  ) {
     super();
   }
 

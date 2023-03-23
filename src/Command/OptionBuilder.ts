@@ -4,7 +4,6 @@ import {
   Constants,
   Channel,
   Role,
-  ApplicationCommandOptionTypes,
   CommandInteraction,
   InteractionOptions,
   AnyGuildTextChannel,
@@ -25,8 +24,8 @@ export namespace OptionTypes {
     | { type: Constants.ApplicationCommandOptionTypes.STRING }
     | {
         type: Constants.ApplicationCommandOptionTypes.STRING;
-        min_length: number;
-        max_length: number;
+        minLength: number;
+        maxLength: number;
       }
     | {
         type: Constants.ApplicationCommandOptionTypes.STRING;
@@ -43,8 +42,8 @@ export namespace OptionTypes {
       }
     | {
         type: Constants.ApplicationCommandOptionTypes.INTEGER;
-        max_value?: number;
-        min_value?: number;
+        maxValue?: number;
+        minValue?: number;
       }
   ) & { description: string; required: boolean };
 
@@ -82,8 +81,8 @@ export namespace OptionTypes {
       }
     | {
         type: Constants.ApplicationCommandOptionTypes.NUMBER;
-        max_value?: number;
-        min_value?: number;
+        maxValue?: number;
+        minValue?: number;
       }
   ) & { description: string; required: boolean };
 
@@ -103,6 +102,12 @@ export namespace OptionTypes {
     | Mentionable
     | Number
     | Attachment;
+
+  // Any option that has choices
+  export type AnyOptionWithChoices = String | Integer | Number;
+
+  // Any option that has min/max values
+  export type AnyOptionWithMinMax = Integer | Number;
 }
 
 export type OptionKV = {
@@ -140,7 +145,7 @@ export namespace OptionBuilder {
     required: boolean = true,
     options:
       | { choices: OptionChoice<string>[] }
-      | { min_length?: number; max_length?: number } = {}
+      | { minLength?: number; maxLength?: number } = {}
   ): OptionTypes.String {
     return {
       type: Constants.ApplicationCommandOptionTypes.STRING,
@@ -155,7 +160,7 @@ export namespace OptionBuilder {
     required: boolean = true,
     options:
       | { choices: OptionChoice<number>[] }
-      | { min_value?: number; max_value?: number } = {}
+      | { minValue?: number; maxValue?: number } = {}
   ): OptionTypes.Integer {
     return {
       type: Constants.ApplicationCommandOptionTypes.INTEGER,
@@ -225,7 +230,7 @@ export namespace OptionBuilder {
     required: boolean = true,
     options:
       | { choices: OptionChoice<number>[] }
-      | { min_value?: number; max_value?: number } = {}
+      | { minValue?: number; maxValue?: number } = {}
   ): OptionTypes.Number {
     return {
       type: Constants.ApplicationCommandOptionTypes.NUMBER,
@@ -259,10 +264,11 @@ export async function ConvertInteractionOptions<
   for (const option of rawOptions) {
     if (
       // @ts-ignore Added elsewhere.
-      schema[option.name].type == ApplicationCommandOptionTypes.SUB_COMMAND ||
+      schema[option.name].type ==
+        Constants.ApplicationCommandOptionTypes.SUB_COMMAND ||
       // @ts-ignore
       schema[option.name].type ==
-        ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
+        Constants.ApplicationCommandOptionTypes.SUB_COMMAND_GROUP
     ) {
       continue;
     } else if (!schema[option.name]) {

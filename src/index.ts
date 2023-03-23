@@ -11,7 +11,7 @@ export {
 } from "./Command/OptionBuilder";
 export { ActionRowComponent } from "./Component/ActionRowComponent";
 export {
-  ButtonBase,
+  ButtonBaseComponent,
   ButtonOptions,
   DangerButtonComponent,
   PrimaryButtonComponent,
