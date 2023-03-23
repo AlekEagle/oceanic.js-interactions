@@ -5,7 +5,7 @@ import {
 } from "oceanic.js";
 import type { BaseCommandData } from "./BaseCommand";
 import { CommandInteractionType, RunnableCommand } from "./RunnableCommand";
-import type { SlashCommand } from "./SlashCommand";
+import type { Subcommand } from "./Subcommand";
 
 export class SubcommandGroup<
   O extends BaseCommandData = BaseCommandData
@@ -30,7 +30,7 @@ export class SubcommandGroup<
     };
   }
 
-  public addSubcommand(command: SlashCommand) {
+  public addSubcommand(command: Subcommand) {
     this.subcommands.push(command);
   }
 
