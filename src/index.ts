@@ -10,7 +10,14 @@ export {
   OptionBuilder,
 } from "./Command/OptionBuilder";
 export { ActionRowComponent } from "./Component/ActionRowComponent";
-export { ButtonBase as ButtonComponent } from "./Component/ButtonComponent";
+export {
+  ButtonBase,
+  ButtonOptions,
+  DangerButtonComponent,
+  PrimaryButtonComponent,
+  SecondaryButtonComponent,
+  SuccessButtonComponent,
+} from "./Component/ButtonComponent";
 export { LinkButtonComponent } from "./Component/LinkButtonComponent";
 export { RunnableComponent } from "./Component/RunnableComponent";
 export {
