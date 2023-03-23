@@ -13,6 +13,7 @@ import { CommandInteraction } from "./Interaction/CommandInteraction";
 
 export declare interface CommandHandlerEvents {
   error: (interaction: CommandInteraction, error: Error) => void;
+  unhandledMessageComponent: (interaction: ComponentInteraction) => void;
 }
 
 /**
@@ -36,7 +37,7 @@ export default class CommandHandler extends EventEmitter {
 
   // Interaction handler.
   private async handleInteraction(interaction: Interaction) {
-    // TODO: Handle components and autocomplete interactions.
+    // TODO: Handle autocomplete interactions.
     if (interaction instanceof OceanicCommandInteraction) {
       const command = this._commands.find((c) => c.id === interaction.data.id);
       if (command == null) return;
@@ -48,8 +49,21 @@ export default class CommandHandler extends EventEmitter {
       const component = this._components.find(
         (c) => c.customID === interaction.data.customID
       );
-      if (component == null) return;
-      else await component.run(interaction);
+      if (component == null) {
+        const unhandledMessageComponentEventHandled = this.emit(
+          "unhandledMessageComponent",
+          interaction
+        );
+        if (!unhandledMessageComponentEventHandled) {
+          console.warn(
+            `Unhandled message component: ${interaction.data.customID}`
+          );
+        }
+      } else {
+        await component.run(interaction);
+        // TODO: Add and handle persistent components.
+        this._components = this._components.filter((c) => c !== component);
+      }
     }
   }
 

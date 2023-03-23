@@ -33,6 +33,8 @@ _Coming soon, this will be here when the rest of the library is completed._
 - [ ] Message commands. (Right clicking a message and selecting a command from the apps menu.)
 - [x] Message components.
   - [x] Message component interaction handling.
+  - [x] One-shot message components.
+  - [ ] Persistent message components.
   - [x] Action Rows.
   - [x] Buttons. (Both buttons that trigger interactions and buttons that redirect to a URL.)
   - [x] Select Menus. (Implemented, but not tested.)
