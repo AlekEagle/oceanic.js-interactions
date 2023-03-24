@@ -9,7 +9,7 @@ import {
   AnyGuildTextChannel,
   AnyTextChannelWithoutGroup,
 } from "oceanic.js";
-import type { BaseCommandData } from "./BaseCommand";
+import type { SlashCommandData } from "./SlashCommand";
 
 // Choice type for options. This is used to specify the choices for String, Integer, and Number options.
 export type OptionChoice<T> = {
@@ -115,7 +115,7 @@ export type OptionKV = {
 };
 
 // Option Argument Type. This is used to specify the type of the arguments passed to the handler function when the command is executed.
-export type OptionArgType<O extends BaseCommandData, P extends OptionKV> = {
+export type OptionArgType<O extends SlashCommandData, P extends OptionKV> = {
   [K in keyof P]: P[K]["type"] extends Constants.ApplicationCommandOptionTypes.STRING
     ? string
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.INTEGER
@@ -253,7 +253,7 @@ export namespace OptionBuilder {
 }
 
 export async function ConvertInteractionOptions<
-  O extends BaseCommandData,
+  O extends SlashCommandData,
   P extends OptionKV
 >(
   schema: P,

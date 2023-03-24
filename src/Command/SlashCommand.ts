@@ -1,6 +1,10 @@
 import {
   Constants,
   CreateChatInputApplicationCommandOptions,
+  AnyTextChannelWithoutGroup,
+  PrivateChannel,
+  Uncached,
+  CommandInteraction,
 } from "oceanic.js";
 import {
   OptionArgType,
@@ -8,23 +12,36 @@ import {
   OptionKV,
 } from "./OptionBuilder";
 
-import type { BaseCommandData } from "./BaseCommand";
-import { CommandInteractionType, RunnableCommand } from "./RunnableCommand";
+import { RunnableCommand } from "./RunnableCommand";
 import type { Subcommand } from "./Subcommand";
 import type { SubcommandGroup } from "./SubcommandGroup";
 
+export type SlashCommandData = {
+  defaultMemberPermissions?: string;
+  nsfw?: boolean;
+  dmPermissions?: boolean;
+};
+
+export type SlashCommandInteractionType<O extends SlashCommandData> =
+  CommandInteraction<
+    | (O["dmPermissions"] extends true
+        ? AnyTextChannelWithoutGroup
+        : Exclude<AnyTextChannelWithoutGroup, PrivateChannel>)
+    | Uncached
+  >;
+
 export type SlashCommandHandler<
-  O extends BaseCommandData,
+  O extends SlashCommandData,
   P extends OptionKV
 > = (
   args: OptionArgType<O, P>,
-  interaction: CommandInteractionType<O>
+  interaction: SlashCommandInteractionType<O>
 ) => void | Promise<void>;
 
 export class SlashCommand<
-  O extends BaseCommandData = BaseCommandData,
+  O extends SlashCommandData = SlashCommandData,
   P extends OptionKV = OptionKV
-> extends RunnableCommand<O> {
+> extends RunnableCommand {
   private subcommands: Subcommand<O>[] = [];
   private subcommandGroups: SubcommandGroup<O>[] = [];
   constructor(
@@ -68,7 +85,7 @@ export class SlashCommand<
     };
   }
 
-  public async run(interaction: CommandInteractionType<O>) {
+  public async run(interaction: CommandInteraction) {
     // If there are no subcommands or subcommand groups, run the handler.
     if (this.subcommands.length === 0 && this.subcommandGroups.length === 0) {
       // Setup runtime blah blah blah.

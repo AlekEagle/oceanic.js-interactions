@@ -1,10 +1,11 @@
 import {
   ApplicationCommandOptionsSubCommand,
+  CommandInteraction,
   Constants,
   InteractionOptionsSubCommand,
 } from "oceanic.js";
-import { CommandInteractionType, RunnableCommand } from "./RunnableCommand";
-import type { BaseCommandData } from "./BaseCommand";
+import { RunnableCommand } from "./RunnableCommand";
+import type { SlashCommandData } from "./SlashCommand";
 import {
   OptionArgType,
   OptionTypes,
@@ -12,19 +13,18 @@ import {
 } from "./OptionBuilder";
 
 export class Subcommand<
-  O extends BaseCommandData = BaseCommandData,
+  O extends SlashCommandData = SlashCommandData,
   P extends { [option: string]: OptionTypes.AnyOption } = {
     [option: string]: OptionTypes.AnyOption;
   }
-> extends RunnableCommand<O> {
+> extends RunnableCommand {
   constructor(
     public name: string,
     public description: string,
-    public options: O = {} as O,
     public params: P = {} as P,
     private handler: (
       args: OptionArgType<O, P>,
-      interaction: CommandInteractionType<O>
+      interaction: CommandInteraction
     ) => void | Promise<void> = () => {}
   ) {
     super();
@@ -40,12 +40,11 @@ export class Subcommand<
           name: key,
           ...value,
         };
-      }),
-      ...this.options,
+      })
     };
   }
 
-  public async run(interaction: CommandInteractionType<O>) {
+  public async run(interaction: CommandInteraction) {
     let args: OptionArgType<O, P> = {} as OptionArgType<O, P>;
     // Check if this command is in a subcommand group.
     if (

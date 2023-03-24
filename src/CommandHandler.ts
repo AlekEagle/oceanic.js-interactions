@@ -5,8 +5,11 @@ import {
   ComponentInteraction,
 } from "oceanic.js";
 import { EventEmitter } from "events";
-import { SlashCommand, SlashCommandHandler } from "./Command/SlashCommand";
-import type { BaseCommandData } from "./Command/BaseCommand";
+import {
+  SlashCommand,
+  SlashCommandHandler,
+  SlashCommandData,
+} from "./Command/SlashCommand";
 import type { OptionKV } from "./Command/OptionBuilder";
 import type { RunnableComponent } from "./Component/RunnableComponent";
 import { CommandInteraction } from "./Interaction/CommandInteraction";
@@ -68,7 +71,7 @@ export default class CommandHandler extends EventEmitter {
   }
 
   public createCommand<
-    O extends BaseCommandData = BaseCommandData,
+    O extends SlashCommandData = SlashCommandData,
     P extends OptionKV = OptionKV
   >(
     name: string,

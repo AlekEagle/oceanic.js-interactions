@@ -1,16 +1,17 @@
 import {
   ApplicationCommandOptionsSubCommand,
   ApplicationCommandOptionsSubCommandGroup,
+  CommandInteraction,
   Constants,
   InteractionOptionsSubCommandGroup,
 } from "oceanic.js";
-import type { BaseCommandData } from "./BaseCommand";
-import { CommandInteractionType, RunnableCommand } from "./RunnableCommand";
+import type { SlashCommandData } from "./SlashCommand";
+import { RunnableCommand } from "./RunnableCommand";
 import type { Subcommand } from "./Subcommand";
 
 export class SubcommandGroup<
-  O extends BaseCommandData = BaseCommandData
-> extends RunnableCommand<O> {
+  O extends SlashCommandData = SlashCommandData
+> extends RunnableCommand {
   public subcommands: Subcommand[] = [];
   constructor(
     public name: string,
@@ -36,7 +37,7 @@ export class SubcommandGroup<
     this.subcommands.push(command);
   }
 
-  public async run(interaction: CommandInteractionType<O>) {
+  public async run(interaction: CommandInteraction) {
     // Technically, a subcommand group can't be run, but we're using RunnableCommand to make it easier to handle subcommands in a hierarchical way.
     // Since we're in a subcommand group, we already know that what we're looking for is a subcommand.
     const subcommand = this.subcommands.find(
