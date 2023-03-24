@@ -1,9 +1,6 @@
 import {
-  CommandInteraction,
   Constants,
-  TextableChannel,
   CreateChatInputApplicationCommandOptions,
-  AnyTextChannel,
 } from "oceanic.js";
 import {
   OptionArgType,

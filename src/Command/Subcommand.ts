@@ -1,10 +1,7 @@
 import {
-  AnyTextChannel,
   ApplicationCommandOptionsSubCommand,
-  CommandInteraction,
   Constants,
   InteractionOptionsSubCommand,
-  TextableChannel,
 } from "oceanic.js";
 import { CommandInteractionType, RunnableCommand } from "./RunnableCommand";
 import type { BaseCommandData } from "./BaseCommand";
@@ -12,7 +9,6 @@ import {
   OptionArgType,
   OptionTypes,
   ConvertInteractionOptions,
-  OptionChoice,
 } from "./OptionBuilder";
 
 export class Subcommand<

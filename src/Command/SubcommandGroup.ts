@@ -28,6 +28,7 @@ export class SubcommandGroup<
       options: this.subcommands.map(
         (command) => command.interactionObject
       ) as Array<ApplicationCommandOptionsSubCommand>,
+      ...this.options,
     };
   }
 
