@@ -8,6 +8,7 @@ import {
   InteractionOptions,
   AnyGuildTextChannel,
   AnyTextChannelWithoutGroup,
+  Attachment,
 } from "oceanic.js";
 import type { BaseCommandData } from "./BaseCommand";
 
@@ -135,7 +136,7 @@ export type OptionArgType<O extends BaseCommandData, P extends OptionKV> = {
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.NUMBER
     ? number
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.ATTACHMENT
-    ? string
+    ? Attachment
     : never;
 };
 
@@ -307,12 +308,16 @@ export async function ConvertInteractionOptions<
             ? interaction.data.resolved.roles.get(option.value)
             : null;
           break;
+        case Constants.ApplicationCommandOptionTypes.ATTACHMENT:
+          options[option.name] = interaction.data.resolved.attachments.get(
+            option.value
+          );
+          break;
         default:
           options[option.name] = option.value;
           break;
       }
     }
   }
-
   return options as OptionArgType<O, P>;
 }
