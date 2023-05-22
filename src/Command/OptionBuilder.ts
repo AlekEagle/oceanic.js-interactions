@@ -8,6 +8,7 @@ import {
   InteractionOptions,
   AnyGuildTextChannel,
   AnyTextChannelWithoutGroup,
+  Attachment,
 } from "oceanic.js";
 import type { SlashCommandData } from "./SlashCommand";
 
@@ -60,6 +61,7 @@ export namespace OptionTypes {
   // Channel option.
   export type Channel = {
     type: Constants.ApplicationCommandOptionTypes.CHANNEL;
+    channelTypes: Constants.GuildChannelTypes[];
   } & { description: string; required: boolean };
 
   // Role option.
@@ -135,7 +137,7 @@ export type OptionArgType<O extends SlashCommandData, P extends OptionKV> = {
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.NUMBER
     ? number
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.ATTACHMENT
-    ? string
+    ? Attachment
     : never;
 };
 
@@ -194,12 +196,14 @@ export namespace OptionBuilder {
 
   export function Channel(
     description: string,
-    required: boolean = true
+    required: boolean = true,
+    channelTypes: Constants.GuildChannelTypes[] = []
   ): OptionTypes.Channel {
     return {
       type: Constants.ApplicationCommandOptionTypes.CHANNEL,
       description,
       required,
+      channelTypes,
     };
   }
 
@@ -306,6 +310,11 @@ export async function ConvertInteractionOptions<
             : interaction.data.resolved.roles.has(option.value)
             ? interaction.data.resolved.roles.get(option.value)
             : null;
+          break;
+        case Constants.ApplicationCommandOptionTypes.ATTACHMENT:
+          options[option.name] = interaction.data.resolved.attachments.get(
+            option.value
+          );
           break;
         default:
           options[option.name] = option.value;

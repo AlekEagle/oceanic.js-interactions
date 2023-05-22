@@ -1,11 +1,12 @@
 import {
   ApplicationCommandOptionsSubCommand,
-  CommandInteraction,
+  CommandInteraction as OceanicCommandInteraction,
   Constants,
   InteractionOptionsSubCommand,
 } from "oceanic.js";
 import { RunnableCommand } from "./RunnableCommand";
 import type { SlashCommandData } from "./SlashCommand";
+import { CommandInteraction } from "../Interaction/CommandInteraction";
 import {
   OptionArgType,
   OptionTypes,
@@ -23,8 +24,8 @@ export class Subcommand<
     public description: string,
     public params: P = {} as P,
     private handler: (
-      args: OptionArgType<O, P>,
-      interaction: CommandInteraction
+      interaction: CommandInteraction,
+      args: OptionArgType<O, P>
     ) => void | Promise<void> = () => {}
   ) {
     super();
@@ -40,11 +41,11 @@ export class Subcommand<
           name: key,
           ...value,
         };
-      })
+      }),
     };
   }
 
-  public async run(interaction: CommandInteraction) {
+  public async run(interaction: OceanicCommandInteraction) {
     let args: OptionArgType<O, P> = {} as OptionArgType<O, P>;
     // Check if this command is in a subcommand group.
     if (
@@ -71,6 +72,9 @@ export class Subcommand<
     }
 
     // Run the handler.
-    await this.handler(args, interaction);
+    await this.handler(
+      CommandInteraction.fromOceanicCommandInteraction(interaction),
+      args
+    );
   }
 }

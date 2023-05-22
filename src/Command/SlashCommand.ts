@@ -4,7 +4,7 @@ import {
   AnyTextChannelWithoutGroup,
   PrivateChannel,
   Uncached,
-  CommandInteraction,
+  CommandInteraction as OceanicCommandInteraction,
 } from "oceanic.js";
 import {
   OptionArgType,
@@ -13,6 +13,7 @@ import {
 } from "./OptionBuilder";
 
 import { RunnableCommand } from "./RunnableCommand";
+import { CommandInteraction } from "../Interaction/CommandInteraction";
 import type { Subcommand } from "./Subcommand";
 import type { SubcommandGroup } from "./SubcommandGroup";
 
@@ -34,8 +35,8 @@ export type SlashCommandHandler<
   O extends SlashCommandData,
   P extends OptionKV
 > = (
-  args: OptionArgType<O, P>,
-  interaction: SlashCommandInteractionType<O>
+  interaction: SlashCommandInteractionType<O>,
+  args: OptionArgType<O, P>
 ) => void | Promise<void>;
 
 export class SlashCommand<
@@ -85,18 +86,21 @@ export class SlashCommand<
     };
   }
 
-  public async run(interaction: CommandInteraction) {
+  public async run(interaction: OceanicCommandInteraction) {
     // If there are no subcommands or subcommand groups, run the handler.
     if (this.subcommands.length === 0 && this.subcommandGroups.length === 0) {
       // Setup runtime blah blah blah.
 
-      const options = await ConvertInteractionOptions(
+      const args = await ConvertInteractionOptions(
         this.params,
         interaction,
         interaction.data.options.raw
       );
 
-      await this.handler(options, interaction);
+      await this.handler(
+        CommandInteraction.fromOceanicCommandInteraction(interaction),
+        args
+      );
     } else {
       // Get the subcommand from the options, it could be in a subcommand group.
       if (
