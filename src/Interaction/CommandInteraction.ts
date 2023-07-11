@@ -1,6 +1,6 @@
 import type { Interaction } from ".";
 import {
-  AnyTextChannelWithoutGroup,
+  AnyInteractionChannel,
   Constants,
   InteractionContent,
   CommandInteraction as OceanicCommandInteraction,
@@ -9,8 +9,8 @@ import {
 import { InitialInteractionMessage } from "./InitialInteractionMessage";
 
 export class CommandInteraction<
-    T extends AnyTextChannelWithoutGroup | Uncached =
-      | AnyTextChannelWithoutGroup
+    T extends AnyInteractionChannel | Uncached =
+      | AnyInteractionChannel
       | Uncached
   >
   extends OceanicCommandInteraction<T>

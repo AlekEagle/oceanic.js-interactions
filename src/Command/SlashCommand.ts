@@ -1,10 +1,11 @@
 import {
   Constants,
   CreateChatInputApplicationCommandOptions,
-  AnyTextChannelWithoutGroup,
   PrivateChannel,
   Uncached,
   CommandInteraction as OceanicCommandInteraction,
+  AnyInteractionChannel,
+  ApplicationCommandOptions,
 } from "oceanic.js";
 import {
   OptionArgType,
@@ -26,8 +27,8 @@ export type SlashCommandData = {
 export type SlashCommandInteractionType<O extends SlashCommandData> =
   CommandInteraction<
     | (O["dmPermissions"] extends true
-        ? AnyTextChannelWithoutGroup
-        : Exclude<AnyTextChannelWithoutGroup, PrivateChannel>)
+        ? AnyInteractionChannel
+        : Exclude<AnyInteractionChannel, PrivateChannel>)
     | Uncached
   >;
 
@@ -74,7 +75,7 @@ export class SlashCommand<
               return {
                 name: key,
                 ...value,
-              };
+              } satisfies ApplicationCommandOptions;
             })
           : [
               ...this.subcommands.map((command) => command.interactionObject),

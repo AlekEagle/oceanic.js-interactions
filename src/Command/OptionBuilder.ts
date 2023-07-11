@@ -6,9 +6,10 @@ import {
   Role,
   CommandInteraction,
   InteractionOptions,
-  AnyGuildTextChannel,
-  AnyTextChannelWithoutGroup,
+  AnyTextableGuildChannel,
+  AnyTextableChannel,
   Attachment,
+  ImplementedChannels,
 } from "oceanic.js";
 import type { SlashCommandData } from "./SlashCommand";
 
@@ -61,7 +62,7 @@ export namespace OptionTypes {
   // Channel option.
   export type Channel = {
     type: Constants.ApplicationCommandOptionTypes.CHANNEL;
-    channelTypes: Constants.GuildChannelTypes[];
+    channelTypes?: ImplementedChannels[];
   } & { description: string; required: boolean };
 
   // Role option.
@@ -127,8 +128,8 @@ export type OptionArgType<O extends SlashCommandData, P extends OptionKV> = {
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.CHANNEL
     ?
         | (O["dmPermissions"] extends true
-            ? AnyTextChannelWithoutGroup
-            : AnyGuildTextChannel)
+            ? AnyTextableChannel
+            : AnyTextableGuildChannel)
         | Channel
     : P[K]["type"] extends Constants.ApplicationCommandOptionTypes.ROLE
     ? Role
@@ -197,7 +198,7 @@ export namespace OptionBuilder {
   export function Channel(
     description: string,
     required: boolean = true,
-    channelTypes: Constants.GuildChannelTypes[] = []
+    channelTypes?: ImplementedChannels[]
   ): OptionTypes.Channel {
     return {
       type: Constants.ApplicationCommandOptionTypes.CHANNEL,
