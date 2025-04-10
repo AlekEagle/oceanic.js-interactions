@@ -19,6 +19,7 @@ export {
   SuccessButtonComponent,
 } from "./Component/ButtonComponent";
 export { LinkButtonComponent } from "./Component/LinkButtonComponent";
+export { PremiumButtonComponent } from "./Component/PremiumButtonComponent";
 export { RunnableComponent } from "./Component/RunnableComponent";
 export {
   SelectMenuOptions,

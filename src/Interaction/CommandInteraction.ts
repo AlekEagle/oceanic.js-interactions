@@ -1,6 +1,7 @@
 import type { Interaction } from ".";
 import {
   AnyInteractionChannel,
+  ApplicationCommandTypes,
   Constants,
   InteractionContent,
   CommandInteraction as OceanicCommandInteraction,
@@ -11,9 +12,10 @@ import { InitialInteractionMessage } from "./InitialInteractionMessage";
 export class CommandInteraction<
     T extends AnyInteractionChannel | Uncached =
       | AnyInteractionChannel
-      | Uncached
+      | Uncached,
+    C extends ApplicationCommandTypes = ApplicationCommandTypes
   >
-  extends OceanicCommandInteraction<T>
+  extends OceanicCommandInteraction<T, C>
   implements Interaction
 {
   static fromOceanicCommandInteraction(interaction: OceanicCommandInteraction) {
@@ -44,7 +46,7 @@ export class CommandInteraction<
    * Identical to `super.createMessage()`. However, we recommend using `this.createInitialMessage()` for simplicity.
    */
   public override async createMessage(data: InteractionContent) {
-    await super.createMessage(data);
+    return await super.createMessage(data);
   }
 
   public async createInitialMessage(data: InteractionContent) {

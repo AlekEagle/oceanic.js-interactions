@@ -16,14 +16,17 @@ export interface ButtonOptions {
 
 export class ButtonBaseComponent extends RunnableComponent<ComponentTypes.BUTTON> {
   public override type: ComponentTypes.BUTTON = ComponentTypes.BUTTON;
-  public style: Exclude<ButtonStyles, ButtonStyles.LINK> = ButtonStyles.PRIMARY;
+  public style: Exclude<
+    ButtonStyles,
+    ButtonStyles.LINK | ButtonStyles.PREMIUM
+  > = ButtonStyles.PRIMARY;
 
   constructor(
     customID: string,
     public label: string,
     handler?: RunnableComponentHandler,
     public options: ButtonOptions & {
-      style?: Exclude<ButtonStyles, ButtonStyles.LINK>;
+      style?: Exclude<ButtonStyles, ButtonStyles.LINK | ButtonStyles.PREMIUM>;
     } = {}
   ) {
     super(customID, handler);

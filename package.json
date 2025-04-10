@@ -8,7 +8,7 @@
   "author": "Alek Evans & Daniel Conley",
   "license": "MIT",
   "dependencies": {
-    "oceanic.js": "^1.8.0"
+    "oceanic.js": "^1.11.2"
   },
   "scripts": {
     "build": "tsc"
