@@ -4,7 +4,10 @@
   "description": "An interaction command handler for Oceanic.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/AlekEagle/oceanic.js-interactions",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlekEagle/oceanic.js-interactions.git"
+  },
   "author": "Alek Evans & Daniel Conley",
   "license": "MIT",
   "dependencies": {
