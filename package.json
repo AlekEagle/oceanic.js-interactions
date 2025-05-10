@@ -11,7 +11,7 @@
   "author": "Alek Evans & Daniel Conley",
   "license": "MIT",
   "dependencies": {
-    "oceanic.js": "1.11.2"
+    "oceanic.js": "1.12.0"
   },
   "scripts": {
     "build": "tsc"

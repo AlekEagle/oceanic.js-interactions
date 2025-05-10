@@ -1,5 +1,5 @@
 import { BaseComponent } from "./BaseComponent";
-import { ComponentTypes, MessageComponent, ButtonStyles } from "oceanic.js";
+import { ComponentTypes, AnyMessageComponent, ButtonStyles } from "oceanic.js";
 import type { ButtonOptions } from "./ButtonComponent";
 
 export class LinkButtonComponent extends BaseComponent<ComponentTypes.BUTTON> {
@@ -14,7 +14,7 @@ export class LinkButtonComponent extends BaseComponent<ComponentTypes.BUTTON> {
     super();
   }
 
-  public override get toComponentObject(): MessageComponent {
+  public override get toComponentObject(): AnyMessageComponent {
     return {
       type: this.type,
       style: this.style,

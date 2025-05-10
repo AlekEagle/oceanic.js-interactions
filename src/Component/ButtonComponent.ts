@@ -7,6 +7,7 @@ import {
   MessageComponent,
   ButtonStyles,
   PartialEmoji,
+  AnyMessageComponent,
 } from "oceanic.js";
 
 export interface ButtonOptions {
@@ -32,7 +33,7 @@ export class ButtonBaseComponent extends RunnableComponent<ComponentTypes.BUTTON
     super(customID, handler);
   }
 
-  public override get toComponentObject(): MessageComponent {
+  public override get toComponentObject(): AnyMessageComponent {
     return {
       type: this.type,
       customID: this.customID,

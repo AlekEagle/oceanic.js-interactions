@@ -27,8 +27,8 @@ export class CommandInteraction<
   /**
    * Identical to `super.defer()`. However, we recommend using `this.acknowledge()` for simplicity.
    */
-  public override async defer(flags: number = 0): Promise<void> {
-    await super.defer(flags);
+  public override async defer(flags: number = 0) {
+    return await super.defer(flags);
   }
 
   public async acknowledge(

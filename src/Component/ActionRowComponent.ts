@@ -1,11 +1,15 @@
-import { Constants, ComponentTypes } from "oceanic.js";
+import {
+  Constants,
+  ComponentTypes,
+  MessageActionRowComponent,
+} from "oceanic.js";
 import { BaseComponent } from "./BaseComponent";
 
 export class ActionRowComponent extends BaseComponent {
   public type: Constants.ComponentTypes.ACTION_ROW =
     Constants.ComponentTypes.ACTION_ROW;
   private components: BaseComponent<
-    Exclude<ComponentTypes, ComponentTypes.ACTION_ROW>
+    Extract<ComponentTypes, MessageActionRowComponent>
   >[] = [];
 
   constructor() {
@@ -22,7 +26,7 @@ export class ActionRowComponent extends BaseComponent {
   }
 
   public addComponent(
-    component: BaseComponent<Exclude<ComponentTypes, ComponentTypes.ACTION_ROW>>
+    component: BaseComponent<Extract<ComponentTypes, MessageActionRowComponent>>
   ) {
     this.components.push(component);
   }
