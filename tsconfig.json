@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "rootDir": "./src",
     "lib": [
       "ES2015",
       "ES2016",
@@ -20,19 +21,19 @@
     "noImplicitOverride": true,
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
-    "ignoreDeprecations": "5.0",
     "checkJs": true,
     "strictPropertyInitialization": true,
     "strictBindCallApply": true,
     "declaration": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist", "test"]
